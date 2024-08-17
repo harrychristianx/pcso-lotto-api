@@ -1,6 +1,6 @@
 {
   "name": "pcso-lotto-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This project provides an API for retrieving and processing PCSO (Philippine Charity Sweepstakes Office) lottery results.",
   "main": "app.js",
   "scripts": {

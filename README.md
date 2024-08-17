@@ -1,18 +1,19 @@
 # PCSO Lotto API
 
-This project provides an API for retrieving and processing PCSO (Philippine Charity Sweepstakes Office) lottery results. It fetches data from a Google Sheet in real time via Computer Vision, processes it to remove duplicates, and serves the unique lottery draw information via an Express.js server.
+This project provides an API for retrieving and processing PCSO (Philippine Charity Sweepstakes Office) lottery results. It fetches data from a Google Sheet in real time via Computer Vision, processes it, and serves the lottery draw information via an Express.js server.
 
-Historical data to be included, from January 02, 2013 to August 06, 2024
+Historical data included, from January 02, 2013 to August 06, 2024
 
 Datasets: https://www.kaggle.com/datasets/harrychristian/pcso-lottery-results-philippines/
 Official Results: https://www.pcso.gov.ph/SearchLottoResult.aspx
 
 ## Features
 
-- Fetches lottery data from a Google Sheet
-- Processes data to keep only unique entries based on date, game, and ball numbers
+- Fetches lottery data in real-time from a Google Sheet using Computer Vision technology
+- Processes data for both real-time and daily results
 - Caches processed data for improved performance
-- Serves data via a RESTful API endpoint
+- Serves data via RESTful API endpoints
+- Provides formatted data for easy integration
 
 ## Prerequisites
 
@@ -52,17 +53,53 @@ Official Results: https://www.pcso.gov.ph/SearchLottoResult.aspx
    node server.js
    ```
 
-2. The API will be available at `http://localhost:4000/api/lottery-results`
+2. The API will be available at:
+   - `http://localhost:4000/api/live-lotto-results` for real-time results
+   - `http://localhost:4000/api/daily-lotto-results` for daily results
 
 ## How It Works
 
-1. The server fetches data from the specified Google Sheet using the Google Sheets API.
-2. The `processData` function processes the fetched data:
-   - It iterates through each row of data
-   - Creates a unique key for each entry based on date, game, and ball numbers
-   - Stores only the first occurrence of each unique combination
-3. The processed data is cached to improve performance for subsequent requests.
-4. The API endpoint `/api/lottery-results` serves the processed data as JSON.
+1. The server fetches data from the specified Google Sheet using the Google Sheets API and Computer Vision technology.
+2. For real-time results:
+   - The `processRealtimeData` function processes the fetched data, removing duplicates based on date, game, and ball numbers.
+3. For daily results:
+   - The `formatDailyData` function formats the data according to the specified structure.
+4. The processed data is cached to improve performance for subsequent requests.
+5. The API endpoints serve the processed data as JSON.
+
+## Data Format
+
+### Real-time Results
+```json
+{
+  "timestamp": "2024-08-17 21:34:49",
+  "date": "2024-08-17",
+  "game": "2D Lotto",
+  "draw": "9PM Draw",
+  "ballNumbers": ["15", "27"],
+  // TO BE ADDED "jackpot": "4,500.00",
+  // TO BE ADDED "winners": "185"
+}
+```
+
+### Daily Results
+```json
+{
+  "timestamp": "2024-08-17 00:00:00",
+  "date": "2024-08-17",
+  "game": "2D Lotto",
+  "draw": "9PM Draw",
+  "ballNumbers": ["15", "27"],
+  "jackpot": "4,500.00",
+  "winners": "185"
+}
+```
+
+## Computer Vision Integration
+
+This (Realtime) API uses advanced Computer Vision technology to extract lottery results from various sources, ensuring up-to-date and accurate data. For more information about our Computer Vision capabilities and pricing, please contact:
+
+Email: info@harrychristian.com
 
 ## Contributing
 
