@@ -1,15 +1,15 @@
 {
   "name": "pcso-lotto-api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.1",
+  "description": "This project provides an API for retrieving and processing PCSO (Philippine Charity Sweepstakes Office) lottery results.",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["pcso", "lotto", "api"],
+  "author": "Harry Christian Baclayo",
+  "license": "Apache-2.0",
   "dependencies": {
     "express": "^4.19.2",
     "googleapis": "^142.0.0",

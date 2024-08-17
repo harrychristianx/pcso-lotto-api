@@ -1,6 +1,11 @@
 # PCSO Lotto API
 
-This project provides an API for retrieving and processing PCSO (Philippine Charity Sweepstakes Office) lottery results. It fetches data from a Google Sheet, processes it to remove duplicates, and serves the unique lottery draw information via an Express.js server.
+This project provides an API for retrieving and processing PCSO (Philippine Charity Sweepstakes Office) lottery results. It fetches data from a Google Sheet in real time via Computer Vision, processes it to remove duplicates, and serves the unique lottery draw information via an Express.js server.
+
+Historical data to be included, from January 02, 2013 to August 06, 2024
+
+Datasets: https://www.kaggle.com/datasets/harrychristian/pcso-lottery-results-philippines/
+Official Results: https://www.pcso.gov.ph/SearchLottoResult.aspx
 
 ## Features
 
