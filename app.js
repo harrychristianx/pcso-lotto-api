@@ -90,6 +90,23 @@ async function fetchRealtimeData() {
     return processedData;
 }
 
+function filterDailyData(data, filter) {
+    return data.filter(entry => {
+        const dateMatch = !filter.date || entry.date === filter.date;
+        const gameMatch = !filter.game || entry.game.replace(/\s+/g, '-').toLowerCase() === filter.game.toLowerCase();
+        const drawMatch = !filter.draw || entry.draw.toLowerCase().includes(filter.draw.toLowerCase());
+        return dateMatch && gameMatch && drawMatch;
+    });
+}
+
+function isValidDate(dateString) {
+    return !isNaN(Date.parse(dateString));
+}
+
+function isValidDraw(drawString) {
+    return ['2PM', '5PM', '9PM'].includes(drawString.toUpperCase());
+}
+
 async function fetchDailyData() {
     const cachedData = cache.get("dailyLotteryResults");
     if (cachedData) {
@@ -127,13 +144,29 @@ app.get('/api/live-lotto-results', async (req, res) => {
     }
 });
 
-app.get('/api/daily-lotto-results', async (req, res) => {
+app.get('/api/daily-lotto-results/:param1?/:param2?/:param3?', async (req, res) => {
     try {
+        const { param1, param2, param3 } = req.params;
+        const filter = {};
+
+        [param1, param2, param3].forEach(param => {
+            if (param) {
+                if (isValidDate(param)) {
+                    filter.date = param;
+                } else if (isValidDraw(param)) {
+                    filter.draw = param.toUpperCase();
+                } else {
+                    filter.game = param;
+                }
+            }
+        });
+
         const data = await fetchDailyData();
-        res.json(data);
+        const filteredData = filterDailyData(data, filter);
+        res.json(filteredData);
     } catch (error) {
-        console.error('Error fetching daily data:', error);
-        res.status(500).json({ error: 'An error occurred while fetching data', details: error.message });
+        console.error('Error fetching or filtering daily data:', error);
+        res.status(500).json({ error: 'An error occurred while fetching or filtering data', details: error.message });
     }
 });
 

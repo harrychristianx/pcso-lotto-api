@@ -12,7 +12,7 @@ Official Results: https://www.pcso.gov.ph/SearchLottoResult.aspx
 - Fetches lottery data in real-time from a Google Sheet using Computer Vision technology
 - Processes data for both real-time and daily results
 - Caches processed data for improved performance
-- Serves data via RESTful API endpoints
+- Serves data via RESTful API endpoints with flexible filtering options
 - Provides formatted data for easy integration
 
 ## Prerequisites
@@ -55,7 +55,22 @@ Official Results: https://www.pcso.gov.ph/SearchLottoResult.aspx
 
 2. The API will be available at:
    - `http://localhost:4000/api/live-lotto-results` for real-time results
-   - `http://localhost:4000/api/daily-lotto-results` for daily results
+   - `http://localhost:4000/api/daily-lotto-results` for daily results with flexible filtering options
+
+### Filtering Options for Daily Results
+
+The `/api/daily-lotto-results` endpoint now supports flexible filtering based on date, game, and draw time. You can use the following URL patterns:
+
+- `/api/daily-lotto-results`: Returns all daily lotto results
+- `/api/daily-lotto-results/2024-08-06`: Returns all results for August 6, 2024
+- `/api/daily-lotto-results/3D-Lotto`: Returns all 3D Lotto results
+- `/api/daily-lotto-results/2PM`: Returns all results for 2PM draws
+- `/api/daily-lotto-results/2024-08-06/3D-Lotto`: Returns 3D Lotto results for August 6, 2024
+- `/api/daily-lotto-results/2024-08-06/3D-Lotto/2PM`: Returns 3D Lotto results for August 6, 2024 at 2PM
+- `/api/daily-lotto-results/3D-Lotto/2PM`: Returns all 3D Lotto results for 2PM draws
+- `/api/daily-lotto-results/2024-08-06/2PM`: Returns all results for August 6, 2024 at 2PM
+
+The order of the parameters doesn't matter, so `/api/daily-lotto-results/2PM/3D-Lotto/2024-08-06` would work just as well.
 
 ## How It Works
 
@@ -64,6 +79,7 @@ Official Results: https://www.pcso.gov.ph/SearchLottoResult.aspx
    - The `processRealtimeData` function processes the fetched data, removing duplicates based on date, game, and ball numbers.
 3. For daily results:
    - The `formatDailyData` function formats the data according to the specified structure.
+   - The `filterDailyData` function applies filters based on the provided parameters (date, game, draw time).
 4. The processed data is cached to improve performance for subsequent requests.
 5. The API endpoints serve the processed data as JSON.
 
@@ -76,9 +92,7 @@ Official Results: https://www.pcso.gov.ph/SearchLottoResult.aspx
   "date": "2024-08-17",
   "game": "2D Lotto",
   "draw": "9PM Draw",
-  "ballNumbers": ["15", "27"],
-  // TO BE ADDED "jackpot": "4,500.00",
-  // TO BE ADDED "winners": "185"
+  "ballNumbers": ["15", "27"]
 }
 ```
 
