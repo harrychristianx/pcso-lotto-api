@@ -5,7 +5,7 @@ const NodeCache = require('node-cache');
 const app = express();
 const port = 4000;
 
-const cache = new NodeCache({ stdTTL: 300 });
+const cache = new NodeCache({ stdTTL: 3 });
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const SPREADSHEET_ID = '16OsD3wm-SKWu-Bw8XG3xNd4sV36b95cZhbrsF5P7zGs';
